@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Analyze Speech Emotion</h2>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <input type="file" class="form-control-file" id="audioFile" name="file">
+                {% for error in form.file.errors %}
+                <small class="text-danger">{{ error }}</small><br>
+                {% endfor %}
+            </div>
+            <div class="col-sm-4">
+                <div id="audioPlayer" style="display: none;">
+                    <audio controls id="audioControl">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+        <button type="submit" id="analyzeButton" class="btn btn-success">Analyze</button>
+    </form>
+
+    {% if emotion %}
+    <div class="row mt-3">
+        <div class="col-sm-4 mt-3">
+            <h3 class="mb-4">Speech Emotion Result:</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            {% if emotion == 'happy' %}
+            <h3>😄 Happy</h3>
+            {% elif emotion == 'sad' %}
+            <h3>😢 Sad</h3>
+            {% elif emotion == 'neutral' %}
+            <h3>😐 Neutral</h3>
+            {% elif emotion == 'angry' %}
+            <h3>😠 Angry</h3>
+            {% elif emotion == 'calm' %}
+            <h3>😌 Calm</h3>
+            {% elif emotion == 'disgust' %}
+            <h3>🤢 Disgust</h3>
+            {% elif emotion == 'fearful' %}
+            <h3>😨 Fearful</h3>
+            {% elif emotion == 'surprised' %}
+            <h3>😲 Surprised</h3>
+            {% else %}
+            <h3> No Emotion </h3>
+            {% endif %}
+        </div>
+        <div class="col-sm-4">
+            <audio controls>
+                <source src="{{ audio_file_url }}" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    // Function to play audio file when selected
+    document.getElementById('audioFile').addEventListener('change', function () {
+        var audioFile = this.files[0];
+        var audioPlayer = document.getElementById('audioControl');
+        var audioUrl = URL.createObjectURL(audioFile);
+        audioPlayer.src = audioUrl;
+        document.getElementById('audioPlayer').style.display = 'block';
+        audioPlayer.pause();
+    });
+
+
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Speech Emotion History</h2>
+    {% if audio_file_history %}
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Emotion</th>
+                    <th>Audio Player</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for audio_fh in audio_file_history %}
+                <tr>
+                    <td>{{ audio_fh.file.name }}</td>
+                    <td>
+                        {% if audio_fh.emotion == 'happy' %}
+                        <h3>😄 Happy</h3>
+                        {% elif audio_fh.emotion == 'sad' %}
+                        <h3>😢 Sad</h3>
+                        {% elif audio_fh.emotion == 'neutral' %}
+                        <h3>😐 Neutral</h3>
+                        {% elif audio_fh.emotion == 'angry' %}
+                        <h3>😠 Angry</h3>
+                        {% elif audio_fh.emotion == 'calm' %}
+                        <h3>😌 Calm</h3>
+                        {% elif audio_fh.emotion == 'disgust' %}
+                        <h3>🤢 Disgust</h3>
+                        {% elif audio_fh.emotion == 'fearful' %}
+                        <h3>😨 Fearful</h3>
+                        {% elif audio_fh.emotion == 'surprised' %}
+                        <h3>😲 Surprised</h3>
+                        {% else %}
+                        <h3> No Emotion </h3>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="{{ audio_fh.file.url }}" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="text-danger"> No Audio Files History Found. </p>
+    {% endif %}
+</div>
+<script>
+    // Function to play audio file when selected
+    document.getElementById('audioFile').addEventListener('change', function () {
+        var audioFile = this.files[0];
+        var audioPlayer = document.getElementById('audioControl');
+        var audioUrl = URL.createObjectURL(audioFile);
+        audioPlayer.src = audioUrl;
+        document.getElementById('audioPlayer').style.display = 'block';
+        audioPlayer.pause();
+    });
+</script>
+{% endblock %}

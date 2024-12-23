@@ -1,0 +1,53 @@
+1. Notebook : Dataset(Ravedess kaggle), data explore,  Model Train (RF, GB, SVC, CNN), Export Model (.h5)
+2. Main Web App (UI): Django web app, On Analyze button click (Load the model, Custom input file, Model runs, and returns its prediction (Emotion))
+
+# ---------- Notebbok --------------
+Stacks Used:
+python glob
+python os
+numpy
+pandas
+matplotlib
+librosa
+sklearn
+keras
+
+1. Dataset Collection (Download files, Scrape from some web)
+Dataset used: RAVDESS: The RAVDESS file contains a unique filename that consists in a 7-part numerical identifier https://www.kaggle.com/datasets/uwrfkaggler/ravdess-emotional-speech-audio/data
+
+2. Data Labelling
+
+3. Feature Extraction
+Techniques Used: 1. MFCC 2. STFT
+Package Used: Librosa
+
+4. Feature Selection
+Techniques Used: RFE
+Model Used: RandomForestClassifier
+Package Used: Librosa
+
+5. Model Selection and Training
+Model Used: Random Forest, SVC, KNN, Gradient Boosting, and CNN
+Model Selection, Optimiser: Train Test Split, Adam
+
+Train: 80% of Dataset, Test: 20% of Dataset
+1. Random Forest Model Accuracy: 59.02777777777778 %
+2. SVC Model Accuracy: 30.555555555555557 %
+3. KNN Model Accuracy: 48.26388888888889 %
+4. Gradient Boosting Model Accuracy: 54.861111111111114 %
+5. CNN Model 
+	5.1 Training Accuracy: 99.82638955116272 %
+	5.2 Testing Accuracy: 66.94444179534912 %
+
+6. Export the Model
+
+# ---------- Web app --------------
+1. Django server 
+2. keep exported ML model
+3. On Analyze button click
+	3.1 Get custom audio file from user
+	3.2 Load the ML model
+	3.3 Run the model to predict the emotion
+	3.4 Get the result
+4. Show result back to UI
+
